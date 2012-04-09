@@ -1,11 +1,13 @@
 package HTML::FormHandlerX::Field::URI::HTTP;
 
+# ABSTRACT: an HTTP URI field
+
 use Moose;
 use Moose::Util::TypeConstraints;
 
 extends 'HTML::FormHandler::Field::Text';
 
-use version; our $VERSION = version->declare("v0.1");
+use version; our $VERSION = version->declare("v0.2");
 
 use URI;
 use Regexp::Common qw(URI);
@@ -15,6 +17,12 @@ has 'scheme' => (
     isa        => 'RegexpRef',
     required   => 1,
     default    => sub { qr/https?/i },
+);
+
+has 'inflate' => (
+    is         => 'rw',
+    isa        => 'Bool',
+    default    => 1,
 );
 
 our $class_messages = {
@@ -37,7 +45,7 @@ sub validate {
     my $regex = $RE{URI}{HTTP}{-scheme => $self->scheme};
     if ($uri =~ m{^$regex$}) {
         $is_valid = 1;
-        $self->_set_value(URI->new($uri));
+        $self->_set_value($self->inflate ? URI->new($uri) : $uri);
     } else {
         $self->add_error($self->get_message('uri_http_invalid'));
     }
@@ -52,22 +60,12 @@ use namespace::autoclean;
 __END__
 =pod
 
-=head1 NAME
-
-HTML::FormHandlerX::Field::URI::HTTP - an HTTP URI field
-
-=head1 VERSION
-
-0.1
-
 =head1 SYNOPSIS
 
 This field inherits from a Text field and is used to validate HTTP(S) URIs.
-Validate values are inflated into an L<URI> object.
+Validated values are inflated into an L<URI> object.
 
 =head1 METHODS
-
-Only one extra method is supported:
 
 =head2 scheme
 
@@ -78,6 +76,11 @@ validate HTTP or HTTPS if you wish:
   scheme => qr/http/i,   # only validate HTTP URIs
   scheme => qr/https/i,  # only validate HTTPS URIs
   scheme => qr/https?/i, # validate both HTTP and HTTPS (default behaviour)
+
+=head2 inflate
+
+A boolean value that is checked whether or not the URL should be inflated into
+the L<URI> object. Default is true.
 
 =head1 SEE ALSO
 
@@ -93,19 +96,4 @@ validate HTTP or HTTPS if you wish:
 
 =back
 
-=head1 AUTHOR
-
- Roman F.
- romanf@cpan.org
-
-=head1 COPYRIGHT
-
-Copyright (c) 2011 Roman F.
-
-This program is free software; you can redistribute
-it and/or modify it under the same terms as Perl itself.
-
-The full text of the license can be found in the
-LICENSE file included with this module.
-
-
+=cut

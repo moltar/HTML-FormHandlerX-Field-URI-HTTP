@@ -41,5 +41,11 @@ _pass($uri, 'http://example.com');
 is $uri->value, 'http://example.com', 'value is set';
 isa_ok $uri->value, 'URI';
 
+## value explicitly not inflated
+$uri = HTML::FormHandlerX::Field::URI::HTTP->new(name => 'uri', inflate => 0);
+_pass($uri, 'http://example.com/');
+is $uri->value, 'http://example.com/', 'value is set';
+ok ! ref $uri->value, 'not a ref';
+
 done_testing;
 # eof
