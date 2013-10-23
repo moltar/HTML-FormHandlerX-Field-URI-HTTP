@@ -4,6 +4,7 @@ BEGIN { use_ok('HTML::FormHandlerX::Field::URI::HTTP'); }
 
 sub _pass {
     my ($field, $uri) = @_;
+    $field->build_result;
     $field->_set_input($uri);
     $field->validate_field;
     ok ! $field->has_errors, "Pass: $uri";
@@ -11,6 +12,7 @@ sub _pass {
 
 sub _fail {
     my ($field, $uri) = @_;
+    $field->build_result;
     $field->_set_input($uri);
     $field->validate_field;
     ok $field->has_errors, "Fail: $uri";
@@ -18,6 +20,7 @@ sub _fail {
 
 ## defaults
 my $uri = HTML::FormHandlerX::Field::URI::HTTP->new(name => 'uri');
+$uri->build_result;
 
 _pass($uri, 'http://example.com');
 _pass($uri, 'HTTP://example.com');

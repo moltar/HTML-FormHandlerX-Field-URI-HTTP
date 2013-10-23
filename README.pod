@@ -6,7 +6,7 @@ HTML::FormHandlerX::Field::URI::HTTP - an HTTP URI field
 
 =head1 VERSION
 
-version v0.2
+version v0.3
 
 =head1 SYNOPSIS
 
@@ -50,7 +50,7 @@ Roman F. <romanf@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Roman F..
+This software is copyright (c) 2013 by Roman F..
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
