@@ -6,12 +6,18 @@ HTML::FormHandlerX::Field::URI::HTTP - an HTTP URI field
 
 =head1 VERSION
 
-version v0.3
+version v0.4
 
 =head1 SYNOPSIS
 
 This field inherits from a Text field and is used to validate HTTP(S) URIs.
 Validated values are inflated into an L<URI> object.
+
+ has_field 'url' => (
+     type    => 'URI::HTTP',
+     scheme  => qr/https?/i,  ## default
+     inflate => 1,            ## default
+ );
 
 =head1 METHODS
 
@@ -21,9 +27,9 @@ This method is used to set the type of regex used for validating the URI. By
 default both HTTP and HTTPS URIs are marked as valid. You can set this to only
 validate HTTP or HTTPS if you wish:
 
-  scheme => qr/http/i,   # only validate HTTP URIs
-  scheme => qr/https/i,  # only validate HTTPS URIs
-  scheme => qr/https?/i, # validate both HTTP and HTTPS (default behaviour)
+ scheme => qr/http/i,   # only validate HTTP URIs
+ scheme => qr/https/i,  # only validate HTTPS URIs
+ scheme => qr/https?/i, # validate both HTTP and HTTPS (default behaviour)
 
 =head2 inflate
 
