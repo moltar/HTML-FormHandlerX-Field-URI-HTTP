@@ -2,7 +2,7 @@ package HTML::FormHandlerX::Field::URI::HTTP;
 
 # ABSTRACT: an HTTP URI field
 
-use version; our $VERSION = version->declare('v0.4');
+our $VERSION = '0.4';
 
 use HTML::FormHandler::Moose;
 extends 'HTML::FormHandler::Field::Text';
